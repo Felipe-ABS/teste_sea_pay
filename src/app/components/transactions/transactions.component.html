@@ -1,0 +1,23 @@
+<table>
+    <tr>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Status</th>
+        <th>Nome</th>
+        <th>Conta</th>
+        <th>Chave</th>
+        <th>Data</th>
+    </tr>
+    <!-- Ficará a tabela normal, mas também poderá mudar para uma tabela paginada caso o usuário vá para transações -->
+    @for (transaction of transactionsList; track transaction.tipo) {
+        <tr>
+            <td>{{transaction.tipo}}</td>
+            <td>{{transaction.valor}}</td>
+            <td>{{transaction.status}}</td>
+            <td>{{transaction.nome}}</td>
+            <td>{{transaction.conta}}</td>
+            <td>{{transaction.chave}}</td>
+            <td>{{transaction.data}}</td>
+        </tr>
+    }
+</table>

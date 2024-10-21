@@ -1,0 +1,19 @@
+<div class="createAccoun">
+    <h1>Crie sua no SeaPay</h1>
+    <p>Complete os campos abaixo para abrir sua conta seaPay:</p>
+    <form action="" name="createAccountForm" method="post">
+        Email* <input type="email" name="email" id="email" placeholder="exemplo@email.com">
+        Senha*  <input type="password" name="password" id="password" placeholder="********">
+        Confirme sua Senha* <input type="password" name="password" id="password" placeholder="********">
+        <input type="checkbox" name="lojista" id="lojista" [checked]="isChecked" (click)="toggle()"> Conta para Lojista
+        * Contas para lojistas não são aptas a realizar transações, apenas receber.
+        @if(isChecked) {
+            Razão Social* <input type="text" placeholder="Razão social da empresa">
+            CNPJ* <input type="text" placeholder="00.000.000/0000-00">
+        } @else {
+            Nome Completo* <input type="text" placeholder="João da Silva">
+            CPF* <input type="text" placeholder="000.000.000-00">
+        }
+        <input type="submit" value="enviar">
+    </form>
+</div>
