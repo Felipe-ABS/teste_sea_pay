@@ -4,11 +4,13 @@
     <div class="transfer-form">
 
     </div>
-    <h1>---------------------------------------------------------------</h1>
-    <app-account-transfer-form></app-account-transfer-form>
-    <h1>---------------------------------------------------------------</h1>
-    <app-transfer-value-form></app-transfer-value-form>
-    <h1>---------------------------------------------------------------</h1>
-    <app-transfer-review-form></app-transfer-review-form>
-    <h1>---------------------------------------------------------------</h1>
+    <form [formGroup]="form">
+        <h1>---------------------------------------------------------------</h1>
+        <app-account-transfer-form></app-account-transfer-form>
+        <h1>---------------------------------------------------------------</h1>
+        <app-transfer-value-form></app-transfer-value-form>
+        <h1>---------------------------------------------------------------</h1>
+        <app-transfer-review-form></app-transfer-review-form>
+        <h1>---------------------------------------------------------------</h1>
+    </form>
 </div>
