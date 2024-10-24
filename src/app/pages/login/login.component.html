@@ -1,11 +1,12 @@
 <h1>Login</h1>
 <div class="login-form">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="onLoginFormSubmitted()">
         <label>Email:</label>
         <input formControlName="registration">
         <label>Password:</label>
         <input type="password" formControlName="password">
-        <button (click)="login()">Entrar</button>
+        <button type="submit" [disabled]="form.invalid">Entrar</button>
+        <button (click)="logout()">Logout</button>
         <input class="create-account-btn" routerLink="create-account" type="button" value="Crie Sua Conta">
     </form>
 </div>

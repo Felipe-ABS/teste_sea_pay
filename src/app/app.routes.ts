@@ -15,17 +15,17 @@ export const routes: Routes = [
     {
         path: 'login',
         loadComponent: () => import('./pages/login/login.component').then(mod => mod.LoginComponent),
-        canActivate: [authGuard]
+        // canActivate: [authGuard]
     },
     {
         path: 'signup',
         loadComponent: () => import('./pages/signup/signup.component').then(mod => mod.SignupComponent),
-        canActivate: [authGuard]
+        // canActivate: [authGuard]
     },
     {
         path: 'dashboard',
         loadComponent: () => import('./pages/dashboard/dashboard.component').then(mod => mod.DashboardComponent),
-        canActivate: [authGuard]
+        // canActivate: [authGuard]
     },
     {path: 'transactions', component: TransactionsComponent},
     {path: 'transfers', component: TransfersComponent},

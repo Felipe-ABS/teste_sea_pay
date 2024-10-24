@@ -1,21 +1,29 @@
 <div class="createAccoun">
     <h1>Crie sua no SeaPay</h1>
     <p>Complete os campos abaixo para abrir sua conta seaPay:</p>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="onSignupSubmit()">
         <label for="email">Email*</label>
         <input type="email" formControlName="email" id="email" placeholder="exemplo@email.com">
+        <input formControlName="id">
         <label>Senha*</label> 
         <input type="password" formControlName="password" id="password" placeholder="********">
         Confirme sua Senha* 
         <input type="password" formControlName="confirmPassword" id="confirmPassword" placeholder="********">
         
-        <input type="checkbox" name="lojista" id="lojista" [checked]="isChecked" (click)="toggle()"> Conta para Lojista
+        <!-- <input type="checkbox" name="lojista" id="lojista" [checked]="isChecked" (click)="toggle()" formControlName="accountType"> Conta para Lojista -->
         * Contas para lojistas não são aptas a realizar transações, apenas receber.
-        @if(isChecked) {
-            <app-store-account></app-store-account>
+        <label>Nome Completo*</label>
+        <input type="text" formControlName="nomeCompleto" placeholder="João da Silva">
+        <label>CPF*</label>
+        <input type="text" formControlName="registration" placeholder="000.000.000-00">
+        <!-- @if(accountType == 'shopkeeper') {
+            <label>Razão Social*</label>
+            <input type="text" formControlName="razaoSocial" placeholder="Razão social da empresa">
+            <label>CNPJ*</label>
+            <input type="text" formControlName="cnpj" placeholder="00.000.000/0000-00">
         } @else {
             <app-normal-account></app-normal-account>
-        }
-        <button (click)="signup()">Enviar</button>
+        } -->
+        <button type="submit" [disabled]="form.invalid">Enviar</button>
     </form>
 </div>

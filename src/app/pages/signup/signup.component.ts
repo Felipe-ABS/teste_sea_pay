@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NormalAccountComponent } from "../../components/normal-account/normal-account.component";
 import { StoreAccountComponent } from "../../components/store-account/store-account.component";
 import { AuthService } from '../../services/auth.service';
+import { AccountType } from '../../types/account-type';
+import { IUser } from '../../interfaces/i-user';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-signup',
@@ -12,38 +15,53 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
-  @Output() eventoTeste= new EventEmitter();
   form: FormGroup;
+  accountType: AccountType = AccountType.shopkeeper;
   isChecked:boolean = false;
   constructor(
         private fb: FormBuilder,
-        private auth: AuthService
+        private auth: AuthService,
+        private destroyRef: DestroyRef
       ) {
-    this.form = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      razaoSocial: ['', Validators.required],
-      cnpj: ['', Validators.required],
+        this.accountType = AccountType.shopkeeper;
+        this.form = this.fb.group({
+          id: [1],
+          email: ['', Validators.required],
+          password: ['', Validators.required],
+          confirmPassword: ['', Validators.required],
+          nomeCompleto: [''],
+          accountType: [AccountType.standard],
+          registration: [''],
+        });
+  }
+
+  onSignupSubmit() {
+    console.log(this.form);
+    console.log(localStorage.getItem('jwt_token'));
+    if (!this.form.valid) {
+      return;
+    }
+
+    this.auth.signup(this.form.value as IUser).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe((data) => {
+      console.log("Subscribe")
     });
   }
 
-  signup() {
-    const val = this.form.value;
-    console.log(val);
-    // console.log(this.auth.getFromDatabase());
-
-    if(val.email && (val.password == val.confirmPassword)) {
-      console.log('Conta de Usuário Criada');
-      console.log('email: ', val.email);
-      console.log('password: ', val.password);
-      console.log('confirmPassword: ', val.confirmPassword);
-    } else {
-      console.log('Preencha o restante do formuiário');
-    }
-  }
-
   toggle() {
+
     this.isChecked = !this.isChecked;
+    if(this.isChecked) {
+      this.accountType = AccountType.shopkeeper;
+      console.log("true");
+      console.log(localStorage);
+      console.log(this.accountType);
+    } else {
+      this.accountType = AccountType.standard
+      console.log("false");
+      console.log(localStorage);
+      console.log(this.accountType);
+    }
   }
 }

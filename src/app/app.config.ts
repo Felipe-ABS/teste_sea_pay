@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from './services/auth.service';
 import { authInterceptor } from './interceptors/auth.interceptor';
 
@@ -14,20 +14,23 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom([
       JwtModule.forRoot({
-        config: {
-          tokenGetter: () => localStorage.getItem('jwt_token'),
+        jwtOptionsProvider: {
+          provide: JWT_OPTIONS,
+          useFactory: jwtOptionsFactory,
         }
       })
     ]),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializerFactory,
-      multi: true,
-      deps: [AuthService]
-    }
+    
   ]
 };
 
-export function initializerFactory(authService: AuthService) {
-  return () => authService.refreshToken();
+export function jwtOptionsFactory() {
+  console.log("LocalStorage");
+  console.log(localStorage)
+  return {
+    tokenGetter: () => {
+      return localStorage.getItem('jwt_token');
+    },
+    whitelistedDomains: ['localhost:3000']
+  };
 }
